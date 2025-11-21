@@ -118,13 +118,19 @@ python examples/simple_game.py
 
 ## 📚 Documentation
 
+### For Users
 - **📖 [Master Plan](AI_GAME_DEVELOPMENT_MASTER_PLAN.md)** - Complete system architecture & implementation plan (with Coplay)
 - **🚀 [Quick Start Guide](QUICK_START_GUIDE.md)** - Get running in 30 minutes
-- **🎬 [Coplay Integration Guide](COPLAY_INTEGRATION.md)** - Complete Coplay setup & usage (NEW!)
+- **🎬 [Coplay Integration Guide](COPLAY_INTEGRATION.md)** - Complete Coplay setup & usage
 - **🔍 [Coplay Complete Analysis](COPLAY_COMPLETE_ANALYSIS.md)** - In-depth Coplay ecosystem analysis
 - **⚙️ [Implementation Guide](IMPLEMENTATION_README.md)** - Testing & running the system
 - **📋 [Project Plan](PROJECT_PLAN.md)** - Detailed technical implementation
 - **🎮 [Game Examples](examples/)** - Sample games & templates
+
+### For Contributors (NEW!) 🤝
+- **🚀 [Coplay Development Plan](COPLAY_DEVELOPMENT_PLAN.md)** - Roadmap for contributing to Coplay
+- **🤝 [Contributing to Coplay](CONTRIBUTING_TO_COPLAY.md)** - Step-by-step contribution guide
+- **🛠️ [Setup Dev Environment](scripts/setup_coplay_dev.sh)** - Automated setup script
 
 ---
 
@@ -229,6 +235,53 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Disclaimer
 This is an **experimental system** pushing the boundaries of AI-assisted game development. Not recommended for production AAA games (yet!).
+
+---
+
+## 🤝 Contributing to Coplay Open Source
+
+We're actively contributing to [Coplay](https://github.com/CoplayDev/coplay-unity-plugin) to enhance the AI game development ecosystem!
+
+### Why Contribute?
+- ✅ **Open Source**: Coplay is fully open source
+- ✅ **Active Community**: 3,000+ users, $1.2M funded
+- ✅ **Direct Impact**: Your contributions help thousands of developers
+- ✅ **Learning**: Work with cutting-edge AI and Unity integration
+- ✅ **Portfolio**: Recognized contributions to a known project
+
+### What We're Adding
+1. **New AI Models**: Claude Opus, Llama 3.1, DeepSeek Coder, Codestral
+2. **Asset APIs**: Suno (music), ElevenLabs (voice), Leonardo (images)
+3. **Enhanced Orchestrator**: 13-step workflow (vs current 7)
+4. **Marketplace**: Community pipeline sharing
+5. **Steam Integration**: Automated game deployment
+6. **Performance**: Parallel generation, caching, streaming
+
+### Get Started Contributing
+
+```bash
+# Quick setup (5 minutes)
+cd /home/user/Game-OS
+./scripts/setup_coplay_dev.sh
+
+# Read contribution guide
+cat CONTRIBUTING_TO_COPLAY.md
+
+# View development plan
+cat COPLAY_DEVELOPMENT_PLAN.md
+```
+
+### Our Contribution Goals
+- [ ] 10+ merged PRs
+- [ ] 6+ new AI models integrated
+- [ ] 8+ asset APIs added
+- [ ] Complete 13-step orchestrator
+- [ ] Launch pipeline marketplace
+- [ ] Become recognized contributors
+
+**Join us in building the future of AI-powered game development!** 🚀
+
+See [COPLAY_DEVELOPMENT_PLAN.md](COPLAY_DEVELOPMENT_PLAN.md) for the complete roadmap.
 
 ---
 
