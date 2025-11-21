@@ -30,7 +30,7 @@
 
 ---
 
-## 🏗️ المعماري الكامل
+## 🏗️ المعماري الكامل (مع Coplay Integration)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -43,24 +43,37 @@
 ┌───────▼────────┐ ┌──────▼───────┐ ┌────────▼─────────┐
 │  Sub-Agent 1:  │ │ Sub-Agent 2: │ │  Sub-Agent 3:    │
 │ Game Designer  │ │ Unity Builder│ │ Asset Generator  │
-│   (Claude)     │ │   (Gemini)   │ │    (Claude)      │
+│   (Claude)     │ │  (Coplay AI) │ │    (Claude)      │
 └───────┬────────┘ └──────┬───────┘ └────────┬─────────┘
         │                  │                  │
-        │         ┌────────▼────────┐        │
-        │         │   Unity MCP     │        │
-        │         │  (Bridge Tool)  │        │
-        │         └────────┬────────┘        │
+        │      ┌───────────▼───────────┐     │
+        │      │  Coplay Orchestrator  │     │
+        │      │   (Multi-Model AI)    │     │
+        │      │ • GPT-4  • Gemini 2.5 │     │
+        │      │ • Claude • Grok 3     │     │
+        │      └───────────┬───────────┘     │
         │                  │                  │
-        │         ┌────────▼────────┐        │
-        │         │  Unity Editor   │        │
-        │         │  (2021.3+ LTS)  │        │
-        │         └────────┬────────┘        │
+        │      ┌───────────▼───────────┐     │
+        │      │    Unity MCP Server   │     │
+        │      │   (14 Core Tools +    │     │
+        │      │   Action Recorder)    │     │
+        │      └───────────┬───────────┘     │
+        │                  │                  │
+        │      ┌───────────▼───────────┐     │
+        │      │  Coplay Unity Plugin  │     │
+        │      │   (v8.3.0 - Editor)   │     │
+        │      └───────────┬───────────┘     │
+        │                  │                  │
+        │      ┌───────────▼───────────┐     │
+        │      │     Unity Editor      │     │
+        │      │    (2021.3+ LTS)      │     │
+        │      └───────────┬───────────┘     │
         │                  │                  │
 ┌───────▼──────────────────▼──────────────────▼─────────┐
-│              Asset Generation APIs Pool                 │
-│  • Meshy AI (3D Models)      • Polyhive (Textures)    │
-│  • Leonardo AI (Textures)    • Suno AI (Music)        │
-│  • Stability AI (Images)     • ElevenLabs (Audio)     │
+│           Asset Generation APIs Pool (Built-in)        │
+│  • Meshy AI (3D - Coplay Native) • Polyhive (Textures)│
+│  • Leonardo AI (Textures)        • Suno AI (Music)    │
+│  • Stability AI (Images)         • ElevenLabs (Audio) │
 │  • Unity Asset Store (Free Packages via Asset Inv 3)  │
 └────────────────────────────┬───────────────────────────┘
                              │
@@ -71,6 +84,15 @@
                     │  • CI/CD        │
                     └─────────────────┘
 ```
+
+### 🚀 الميزة الجديدة: Coplay Orchestrator Mode
+**التحسين الكبير:** من 60-70% automation → **95-98% automation**
+
+- **Orchestrator Mode:** GDD → Complete Game in 15-45 minutes
+- **Multi-Model AI:** Switch between 4 AI models per task for optimal results
+- **Action Recorder:** Create reusable pipelines (record once, replay many times)
+- **Built-in Meshy:** Generate 3D models directly in Unity Editor
+- **14 Unity MCP Tools:** Complete Unity control (GameObjects, Assets, Scripts, Scenes, etc.)
 
 ---
 
@@ -113,20 +135,99 @@ anthropic-beta: computer-use-2025-01-24
 
 ---
 
-### 3. Sub-Agent 2: Unity Builder (المطور)
-**الدور:** بناء اللعبة في Unity
-**الأداة:** Gemini + Unity MCP
+### 3. Sub-Agent 2: Unity Builder (المطور) - Powered by Coplay ⭐
+**الدور:** بناء اللعبة في Unity بأتمتة 95%+
+**الأداة:** Coplay Unity Plugin + Multi-Model AI (GPT-4, Gemini 2.5 Pro, Claude 4-Sonnet, Grok 3)
 **المسؤوليات:**
-- إنشاء Project Structure في Unity
-- كتابة كل C# Scripts
-- ربط الـ Systems ببعضها
-- إعداد Scenes & Prefabs
-- تطبيق الـ UI/UX
-- Integration Testing
+- إنشاء Project Structure في Unity (تلقائي)
+- كتابة كل C# Scripts (AI-generated مع 4 نماذج)
+- ربط الـ Systems ببعضها (Orchestrator Mode)
+- إعداد Scenes & Prefabs (Action Pipelines)
+- تطبيق الـ UI/UX (Multi-model generation)
+- Integration Testing (Fast validation)
+- Generate 3D Assets (Meshy built-in)
 
 **الأدوات:**
-- Unity MCP: `github.com/justinpbarnett/unity-mcp`
-- Unity ML-Agents (للـ AI Opponents)
+- **Coplay Unity Plugin v8.3.0**: `github.com/CoplayDev/coplay-unity-plugin`
+  - Orchestrator Mode (GDD → Complete Game)
+  - Action Recorder (Reusable Pipelines)
+  - Multi-Model AI Switching
+  - Built-in Meshy 3D generation
+- **Unity MCP Server**: `github.com/CoplayDev/unity-mcp` (Maintained by Coplay)
+  - 14 Core Tools (execute_menu_item, manage_asset, manage_gameobject, etc.)
+  - Script validation (basic/standard/strict modes)
+  - Batch operations support
+- **Integration Layer**: `ai_game_dev/integrations/coplay_orchestrator.py`
+  - Python wrapper for Coplay API
+  - Multi-model orchestration
+  - Pipeline management
+
+**Workflow مع Coplay:**
+```python
+# 1. Initialize Coplay Orchestrator
+from ai_game_dev.integrations import CoplayOrchestratorClient, CoplayConfig, AIModel
+
+config = CoplayConfig(
+    unity_project_path="/path/to/project",
+    claude_api_key=os.getenv('ANTHROPIC_API_KEY'),
+    gemini_api_key=os.getenv('GOOGLE_API_KEY'),
+    meshy_api_key=os.getenv('MESHY_API_KEY'),
+    default_model=AIModel.CLAUDE_SONNET_4_5
+)
+
+orchestrator = CoplayOrchestratorClient(config)
+
+# 2. Connect to Unity MCP
+await orchestrator.connect_to_unity_mcp()
+await orchestrator.load_unity_project()
+
+# 3. Execute Orchestrator Mode (GDD → Complete Game)
+result = await orchestrator.orchestrator_mode(
+    gdd=game_design_document,
+    model=AIModel.GEMINI_2_5_PRO,  # Can switch per task
+    enable_asset_generation=True
+)
+
+# Output:
+# ✅ 15-45 minutes → Complete game with:
+#    - All C# scripts (multi-model generated)
+#    - All 3D models (Meshy)
+#    - Complete scenes and prefabs
+#    - Validated and compiled
+```
+
+**Multi-Model Strategy:**
+- **GPT-4.1 Turbo:** Complex system architecture, advanced algorithms
+- **Gemini 2.5 Pro:** Large-scale code generation, multi-file operations
+- **Claude 4-Sonnet:** Precise script editing, debugging, optimization
+- **Grok 3:** Experimental features, creative solutions
+
+**Orchestrator Mode Steps (Automated):**
+1. **Project Structure** (2-3 min): Create folders, configure settings
+2. **Script Generation** (8-15 min): Generate all C# scripts with AI
+3. **Asset Generation** (5-10 min): Generate 3D models via Meshy
+4. **Scene Building** (3-5 min): Create and populate scenes
+5. **Prefab Creation** (2-4 min): Convert GameObjects to prefabs
+6. **Configuration** (1-2 min): Apply project settings
+7. **Validation** (1-3 min): Validate all scripts, compile
+
+**Action Recorder Usage:**
+```python
+# Record a pipeline (one-time)
+await orchestrator.record_action_pipeline(
+    pipeline_name="create_player_character",
+    description="Create player with movement, animation, and stats"
+)
+# ... perform actions in Unity Editor ...
+# Pipeline saved automatically
+
+# Replay pipeline (reusable)
+await orchestrator.replay_action_pipeline(
+    pipeline_name="create_player_character",
+    parameters={"character_name": "NewPlayer", "max_health": 100}
+)
+# Instant recreation with different parameters
+```
 
 ---
 

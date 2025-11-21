@@ -1,13 +1,19 @@
 # AI Game Development System - Requirements
 # Python 3.10+
+# With Coplay Orchestrator Integration
 
 # Core AI APIs
-anthropic>=0.40.0
-google-generativeai>=0.8.0
+anthropic>=0.40.0              # Claude API (for Designer Agent + Master Agent)
+google-generativeai>=0.8.0     # Gemini API (for bulk script generation)
+openai>=1.0.0                  # OpenAI API (for GPT-4 multi-model support)
 
-# HTTP & Requests
+# HTTP & Requests (for Unity MCP + APIs)
 requests>=2.31.0
 urllib3>=2.0.0
+httpx>=0.25.0                  # Modern async HTTP client
+
+# WebSocket (for Unity MCP real-time connection)
+websockets>=12.0
 
 # Environment Variables
 python-dotenv>=1.0.0

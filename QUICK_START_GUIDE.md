@@ -8,9 +8,10 @@
 
 ### 1. Software
 - [ ] Python 3.10 أو أحدث
-- [ ] Unity Hub + Unity 2021.3 LTS
+- [ ] Unity Hub + Unity 2021.3 LTS (أو أحدث)
 - [ ] Git
-- [ ] Node.js 16+ (لـ Unity MCP)
+- [ ] Node.js 16+ (لـ Unity MCP Server)
+- [ ] Coplay Unity Plugin v8.3.0+ (سيتم تثبيته تلقائياً)
 
 ### 2. API Keys (سجل في هذه المواقع)
 - [ ] Claude API: https://console.anthropic.com
@@ -27,11 +28,26 @@
 ### 1.1 Clone المشروع
 ```bash
 cd /home/user
-git clone https://github.com/justinpbarnett/unity-mcp.git
-cd unity-mcp
+git clone <your-repo-url> Game-OS
+cd Game-OS
 ```
 
-### 1.2 تثبيت Python Dependencies
+### 1.2 التثبيت التلقائي (الطريقة السهلة!)
+```bash
+# تشغيل setup script الذي يقوم بكل شيء:
+chmod +x setup.sh
+./setup.sh
+
+# هذا السكربت سيقوم بـ:
+# ✅ تثبيت Python dependencies
+# ✅ إنشاء virtual environment
+# ✅ Clone Unity MCP Server
+# ✅ Clone Coplay Unity Plugin
+# ✅ إنشاء ملف .env template
+# ✅ اختبار الـ APIs
+```
+
+### 1.3 التثبيت اليدوي (إذا فشل التلقائي)
 ```bash
 # إنشاء Virtual Environment
 python3 -m venv venv
@@ -40,12 +56,16 @@ source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate  # Windows
 
 # تثبيت المكتبات
-pip install anthropic google-generativeai requests python-dotenv
-pip install elevenlabs
-pip install -r requirements.txt  # من unity-mcp
+pip install -r requirements.txt
+
+# Clone Unity MCP Server (Coplay maintained)
+git clone https://github.com/CoplayDev/unity-mcp.git
+
+# Clone Coplay Unity Plugin
+git clone -b beta https://github.com/CoplayDev/coplay-unity-plugin.git
 ```
 
-### 1.3 إعداد Unity
+### 1.4 إعداد Unity + Coplay Plugin
 ```bash
 # تحميل Unity Hub
 # Linux
@@ -55,7 +75,29 @@ chmod +x UnityHub.AppImage
 
 # أو من الموقع: https://unity.com/download
 
-# تثبيت Unity 2021.3 LTS من Unity Hub
+# تثبيت Unity 2021.3 LTS (أو أحدث) من Unity Hub
+
+# تثبيت Coplay Plugin في Unity:
+# Method 1 (Recommended): Auto-Setup في Coplay Plugin
+# افتح Unity → Window → Coplay → Setup Wizard → Next → Install
+
+# Method 2: Manual Git URL
+# Unity → Window → Package Manager → + → Add package from git URL
+# https://github.com/CoplayDev/coplay-unity-plugin.git#beta
+
+# Method 3: OpenUPM (Alternative)
+# npm install -g openupm-cli
+# openupm add ai.coplay.unity
+```
+
+### 1.5 بدء Unity MCP Server
+```bash
+cd unity-mcp
+python server.py
+
+# يجب أن ترى:
+# 🚀 Unity MCP Server started on port 3000
+# ✅ Ready to receive connections
 ```
 
 ---

@@ -69,16 +69,22 @@ else
 fi
 echo ""
 
-# Clone Unity MCP
-echo "🎮 Cloning Unity MCP..."
+# Clone Unity MCP Server (Coplay maintained version)
+echo "🎮 Cloning Unity MCP Server (Coplay version)..."
 if [ -d "unity-mcp" ]; then
     echo -e "${YELLOW}⚠️  unity-mcp already exists. Skipping clone...${NC}"
 else
-    git clone https://github.com/justinpbarnett/unity-mcp.git > /dev/null 2>&1
+    git clone https://github.com/CoplayDev/unity-mcp.git > /dev/null 2>&1
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ Unity MCP cloned${NC}"
+        echo -e "${GREEN}✅ Unity MCP Server cloned${NC}"
     else
-        echo -e "${RED}❌ Failed to clone Unity MCP${NC}"
+        echo -e "${YELLOW}⚠️  Failed to clone from CoplayDev, trying original repo...${NC}"
+        git clone https://github.com/justinpbarnett/unity-mcp.git > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Unity MCP Server cloned (original)${NC}"
+        else
+            echo -e "${RED}❌ Failed to clone Unity MCP${NC}"
+        fi
     fi
 fi
 echo ""
@@ -93,6 +99,24 @@ if [ -d "unity-mcp" ]; then
     echo ""
 fi
 
+# Clone Coplay Unity Plugin
+echo "🎬 Cloning Coplay Unity Plugin..."
+if [ -d "coplay-unity-plugin" ]; then
+    echo -e "${YELLOW}⚠️  coplay-unity-plugin already exists. Skipping clone...${NC}"
+else
+    git clone -b beta https://github.com/CoplayDev/coplay-unity-plugin.git > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✅ Coplay Unity Plugin cloned${NC}"
+        echo -e "${YELLOW}   📌 Install in Unity via Package Manager:${NC}"
+        echo -e "${YELLOW}      Window → Package Manager → + → Add from git URL${NC}"
+        echo -e "${YELLOW}      https://github.com/CoplayDev/coplay-unity-plugin.git#beta${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Failed to clone Coplay Plugin${NC}"
+        echo -e "${YELLOW}   You can install it manually in Unity${NC}"
+    fi
+fi
+echo ""
+
 # Create .env template if it doesn't exist
 echo "🔑 Setting up environment variables..."
 if [ -f ".env" ]; then
@@ -101,23 +125,32 @@ else
     cat > .env << 'EOF'
 # AI Game Development System - Environment Variables
 # Fill in your API keys below
+# With Coplay Multi-Model AI Support
 
-# AI APIs
-ANTHROPIC_API_KEY=your-claude-api-key-here
-GOOGLE_API_KEY=your-gemini-api-key-here
+# AI APIs (Multi-Model Support)
+ANTHROPIC_API_KEY=your-claude-api-key-here          # Claude (required for Designer Agent)
+GOOGLE_API_KEY=your-gemini-api-key-here             # Gemini (required for Unity Builder)
+OPENAI_API_KEY=your-openai-api-key-here             # GPT-4 (optional, for multi-model)
 
 # Asset Generation APIs
-MESHY_API_KEY=your-meshy-api-key-here
-LEONARDO_API_KEY=your-leonardo-api-key-here
-SUNO_API_KEY=your-suno-api-key-here
-ELEVENLABS_API_KEY=your-elevenlabs-api-key-here
-STABILITY_API_KEY=your-stability-api-key-here
-POLYHIVE_API_KEY=your-polyhive-api-key-here
+MESHY_API_KEY=your-meshy-api-key-here               # 3D Models (Coplay built-in support)
+LEONARDO_API_KEY=your-leonardo-api-key-here         # Textures & Images (optional)
+SUNO_API_KEY=your-suno-api-key-here                 # Music generation (optional)
+ELEVENLABS_API_KEY=your-elevenlabs-api-key-here     # Voice/SFX (optional)
+STABILITY_API_KEY=your-stability-api-key-here       # Images (optional)
+POLYHIVE_API_KEY=your-polyhive-api-key-here         # Textures (optional)
 
-# Paths
+# Unity Paths
 UNITY_PROJECT_PATH=/home/user/Unity/Projects
 UNITY_MCP_PATH=/home/user/Game-OS/unity-mcp
+UNITY_MCP_SERVER_URL=http://localhost:3000
 PROJECT_ROOT=/home/user/Game-OS
+
+# Coplay Settings
+COPLAY_DEFAULT_MODEL=claude-sonnet-4-5-20250929     # claude|gemini-2.5-pro|gpt-4
+COPLAY_ENABLE_ORCHESTRATOR=true
+COPLAY_ENABLE_ACTION_RECORDER=true
+COPLAY_VALIDATION_LEVEL=standard                    # basic|standard|strict
 
 # Steam (optional)
 STEAM_USERNAME=your-steam-username
@@ -127,6 +160,7 @@ STEAM_APP_ID=your-app-id
 # Development Settings
 DEBUG=True
 LOG_LEVEL=INFO
+ENABLE_PROFILING=false
 EOF
     echo -e "${GREEN}✅ .env template created${NC}"
     echo -e "${YELLOW}⚠️  Please edit .env and add your API keys!${NC}"
